@@ -16,5 +16,4 @@ def bruteForce(list):
                 distance = temp
                 point1 = list[i]
                 point2 = list[j]
-
     return distance, point1, point2

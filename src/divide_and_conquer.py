@@ -75,35 +75,35 @@ def mergeSort(arr, left, right):
         merge(arr, left, middle, right)
 
 
-# def compare2Points(tuple1, tuple2, distance):
-#     n = len(tuple1)
-#     below = True
-#     for i in range(n):
-#         if ((tuple1[i]-tuple2[j]) >= distance) and (tuple[i]-tuple[j] <= (distance*(-1)))):
-#             below=False
-#             break
-#     return below
-
 def stripPoints(arr, distance, divider, middlePoint):
     points = []
+    # points.append(divider)
+    # print('ini middle', divider)
     for i in range(middlePoint, len(arr)):
-        for j in range(len(divider)-1):
-            if (arr[i][j] - divider[j] > distance):
-                break
-            if (j == len(divider) - 1):
-                points.append(arr[i])
+        # print('check1')
+        if (arr[i][0] - divider[0] > distance):
+            break
         else:
-            continue
-        break
-    for i in range(middlePoint, -1):
-        for j in range(len(divider)-1):
-            if (arr[i][j] - divider[j] > distance):
-                break
-            if (j == len(divider) - 1):
-                points.append(arr[i])
+            for j in range(len(divider)-1):
+                if (arr[i][j] - divider[j] > distance):
+                    # print('test')
+                    break
+                if (j == len(divider) - 2):
+                    points.append(arr[i])
+                    # print('check*')
+
+    for i in range(middlePoint-1, -1, -1):
+        # print('check1')
+        if (divider[0]-arr[i][0] > distance):
+            break
         else:
-            continue
-        break
+            for j in range(len(divider)-1):
+                if (divider[j]-arr[i][j] > distance):
+                    # print('test')
+                    break
+                if (j == len(divider) - 2):
+                    points.append(arr[i])
+                    # print('check')
     return points
 
 
@@ -128,25 +128,14 @@ def closestPair(arr, n):
             distance = distance2
             point1 = temp2_point1
             point2 = temp2_point2
-        distanceStrip, point1Strip, point2Strip = stripPair(arr)
-        if (distanceStrip < distance):
-            distance = distanceStrip
-            point1 = point1Strip
-            point2 = point2Strip
+
+            # print('ini arr middle', arr[middle])
+        strips = stripPoints(arr, distance, arr[middle], middle)
+        # print('ini strips', strips)
+        if (len(strips) >= 2):
+            distanceStrip, point1Strip, point2Strip = stripPair(strips)
+            if (distanceStrip < distance):
+                distance = distanceStrip
+                point1 = point1Strip
+                point2 = point2Strip
     return distance, point1, point2
-
-
-arr = [(12, 15, 5, 7), (12, 11, 13, 6),
-       (5, 6, 7, 9), (5, 6, 3, 10), (1, 7, 9, 10)]
-n = len(arr)
-print("Given array is")
-for i in range(n):
-    print(arr[i], end=" ")
-
-mergeSort(arr, 0, n-1)
-print("\n\nSorted array is")
-for i in range(n):
-    print(arr[i], end=" ")
-
-print(closestPair(arr, n))
-print(bruteForce(arr))
