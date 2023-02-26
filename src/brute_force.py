@@ -9,11 +9,13 @@ def bruteForce(list):
     distance = euclideanDistance(list[0], list[1])
     point1 = list[0]
     point2 = list[1]
+    numEuc = 0
     for i in range(0, len(list)):
         for j in range(i+1, len(list)):
             temp = euclideanDistance(list[i], list[j])
+            numEuc += 1
             if (temp < distance):
                 distance = temp
                 point1 = list[i]
                 point2 = list[j]
-    return distance, point1, point2
+    return distance, point1, point2, numEuc

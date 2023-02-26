@@ -2,6 +2,7 @@ import random
 from divide_and_conquer import *
 from brute_force import bruteForce
 from timeit import default_timer as timer
+from visualizer import plotPoints
 
 print('    __  _       ___   _____   ___  _____ ______      ____   ____  ____  ____        ___   _____      ____   ___  ____  ____   ______  _____')
 print('   /  ]| |     /   \ / ___/  /  _]/ ___/|      |    |    \ /    ||    ||    \      /   \ |     |    |    \ /   \|    ||    \ |      |/ ___/')
@@ -40,12 +41,12 @@ while (running == True):
         print('Point', i+1, ":", list[i])
 
     start1 = timer()
-    distance, point1, point2 = bruteForce(list)
+    distance, point1, point2, numEuc1 = bruteForce(list)
     end1 = timer()
 
     start2 = timer()
     mergeSort(list, 0, n-1)
-    d1, p1, p2 = closestPair(list, n)
+    d1, p1, p2, numEuc2 = closestPair(list, n)
     end2 = timer()
 
     print('\n')
@@ -56,6 +57,7 @@ while (running == True):
     print(point2)
     print("Waktu yang dibutuhkan oleh brute force: ")
     print(end1-start1, ' detik')
+    print('Banyak perhitungan Euclidean Distance:', numEuc1)
 
     print('\n')
     print('DIVIDE AND CONQUER')
@@ -65,7 +67,10 @@ while (running == True):
     print(p2)
     print("Waktu yang dibutuhkan oleh divide and conquer:")
     print(end2-start2, ' detik')
+    print('Banyak perhitungan Euclidean Distance:', numEuc2)
     print('\n')
+    if (dimensi == 3):
+        plotPoints(list, point1, point2)
     stop = input("Apakah kamu ingin keluar dari program? (y/n)")
     print('\n')
     print('\n')
