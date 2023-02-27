@@ -138,4 +138,6 @@ def closestPair(arr, n):
                 distance = distanceStrip
                 point1 = point1Strip
                 point2 = point2Strip
-    return distance, point1, point2, (numEuc + numEuc1 + numEuc2)
+            return distance, point1, point2, (numEuc + numEuc1 + numEuc2)
+        else:
+            return distance, point1, point2, (numEuc1 + numEuc2)

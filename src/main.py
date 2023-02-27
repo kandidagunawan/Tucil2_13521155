@@ -28,17 +28,35 @@ print('-------------------------------------------------------------------------
 print('\n')
 running = True
 while (running == True):
-    dimensi = int(input("Masukkan dimensi dari titik yang diinginkan: "))
-    n = int(input("Masukkan jumlah titik yang diinginkan (n): "))
+    validate = False
+    while (validate == False):
+        dimensi = input("Masukkan dimensi dari titik yang diinginkan: ")
+        try:
+            dimensi = int(dimensi)
+        except:
+            print('Only integers are allowed')
+        else:
+            validate = True
+    validate = False
+    while (validate == False):
+        n = input("Masukkan jumlah titik yang diinginkan (n): ")
+        try:
+            n = int(n)
+        except:
+            print('Only integers are allowed')
+        else:
+            validate = True
     list = []
     for i in range(n):
         tuple = ()
         for j in range(dimensi):
-            temp = random.random()
+            temp = random.uniform(-1000, 1000)
             tuple += (temp,)
         list.append(tuple)
-    for i in range(n):
-        print('Point', i+1, ":", list[i])
+
+    # PRINT EVERY POINT
+    # for i in range(n):
+    #     print('Point', i+1, ":", list[i])
 
     start1 = timer()
     distance, point1, point2, numEuc1 = bruteForce(list)
@@ -70,8 +88,12 @@ while (running == True):
     print('Banyak perhitungan Euclidean Distance:', numEuc2)
     print('\n')
     if (dimensi == 3):
-        plotPoints(list, point1, point2)
-    stop = input("Apakah kamu ingin keluar dari program? (y/n)")
+        plotPoints(list, p1, p2)
+    validate = False
+    while (validate == False):
+        stop = input("Apakah kamu ingin keluar dari program? (y/n)")
+        if (stop == "y" or stop == "n"):
+            validate = True
     print('\n')
     print('\n')
     if (stop == "y"):
