@@ -120,28 +120,37 @@ def closestPair(arr, n):
         return bruteForce(arr)
     else:
         middle = n//2
-        distance1, temp1_point1, temp1_point2, numEuc1 = closestPair(
+        distance1, listOfPoints1, numEuc1 = closestPair(
             arr[:middle], middle)
-        distance2, temp2_point1, temp2_point2, numEuc2 = closestPair(
+        distance2, listOfPoints2, numEuc2 = closestPair(
             arr[middle:n], n-middle)
         if (distance1 < distance2):
             distance = distance1
-            point1 = temp1_point1
-            point2 = temp1_point2
+            listOfPoints = listOfPoints1
+            # point1 = temp1_point1
+            # point2 = temp1_point2
+        elif (distance1 == distance2):
+            listOfPoints = listOfPoints1 + listOfPoints2
         else:
             distance = distance2
-            point1 = temp2_point1
-            point2 = temp2_point2
+            listOfPoints = listOfPoints2
+            # point1 = temp2_point1
+            # point2 = temp2_point2
 
         strips = stripPoints(arr, distance, arr[middle], middle)
         # print('ini strips ', strips)
 
         if (len(strips) >= 2):
-            distanceStrip, point1Strip, point2Strip, numEuc = stripPair(strips)
+            distanceStrip, listOfPointStrip, numEuc = stripPair(strips)
             if (distanceStrip < distance):
                 distance = distanceStrip
-                point1 = point1Strip
-                point2 = point2Strip
-            return distance, point1, point2, (numEuc + numEuc1 + numEuc2)
+                listOfPoints = listOfPointStrip
+            elif (distanceStrip == distance):
+                for x in listOfPointStrip:
+                    if (x in listOfPointStrip):
+                        continue
+                    else:
+                        listOfPoints.append(x)
+            return distance, listOfPoints, (numEuc + numEuc1 + numEuc2)
         else:
-            return distance, point1, point2, (numEuc1 + numEuc2)
+            return distance, listOfPoints, (numEuc1 + numEuc2)
