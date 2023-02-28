@@ -34,4 +34,3 @@ def printPasanganTitik(list):
         print("Pasangan titik ke-", i+1)
         for j in range(2):
             print(list[i][j])
-# [[(3, 4), (4, 5)], [(2, 4), (4, 8)]]

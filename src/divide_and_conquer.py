@@ -1,14 +1,7 @@
-from brute_force import bruteForce
+from basic_functions import *
 
 
-def euclideanDistance(tuple1, tuple2):
-    distance2 = 0
-    for i in range(len(tuple1)):
-        distance2 += ((tuple1[i] - tuple2[i])**2)
-    return (distance2 ** (1/2))
-
-
-def merge(arr, left, middle, right):
+def merge(arr, left, middle, right, koordinat):
     n1 = middle - left + 1
     n2 = right - middle
 
@@ -28,25 +21,25 @@ def merge(arr, left, middle, right):
     k = left     # Indeks dari array arr
 
     while i < n1 and j < n2:
-        if L[i][0] < R[j][0]:   # Membandingkan elemen pertama tuple
+        if L[i][koordinat] < R[j][koordinat]:   # Membandingkan elemen ke-koordinat tuple
             arr[k] = L[i]
             i += 1
         # Jika elemen pertama tuple sama, cek elemen berikutnya sampai ada elemen yang berbeda
-        elif L[i][0] == R[j][0]:
+        elif L[i][koordinat] == R[j][koordinat]:
             temp = 0
-            same = True
-            while (same and temp < len(L[i])):
-                if (L[i][temp] < R[j][temp]):
-                    arr[k] = L[i]
-                    i += 1
-                    same = False
-                elif (L[i][temp] > R[j][temp]):
+            sama = True
+            while (sama and temp < len(L[i])):
+                if (L[i][temp] > R[j][temp]):
                     arr[k] = R[j]
                     j += 1
-                    same = False
+                    sama = False
+                elif (L[i][temp] < R[j][temp]):
+                    arr[k] = L[i]
+                    i += 1
+                    sama = False
                 else:
                     temp += 1
-            if (same):
+            if (sama):
                 arr[k] = L[i]
                 i += 1
         else:
@@ -67,87 +60,58 @@ def merge(arr, left, middle, right):
         k += 1
 
 
-def mergeSort(arr, left, right):
+def mergeSort(arr, left, right, koordinat):
     if (left < right):
         middle = left + (right-left) // 2
-        mergeSort(arr, left, middle)
-        mergeSort(arr, middle + 1, right)
-        merge(arr, left, middle, right)
+        mergeSort(arr, left, middle, koordinat)
+        mergeSort(arr, middle + 1, right, koordinat)
+        merge(arr, left, middle, right, koordinat)
 
 
 def stripPoints(arr, distance, divider, middlePoint):
     points = []
     for i in range(middlePoint, len(arr)):
-        # print('ini yg up')
-        # print(arr[i][0])
-        # print(divider[0])
         if (arr[i][0] - divider[0] > distance):
             break
         else:
-            if (len(divider) == 1):
-                points.append(arr[i])
-            for j in range(len(divider)-1):
-                if (arr[i][j] - divider[j] > distance):
-                    # print('test')
-                    break
-                if (j == len(divider) - 2):
-                    points.append(arr[i])
-                    # print('check*')
-
+            points.append(arr[i])
     for i in range(middlePoint-1, -1, -1):
-        # print('ini yg down')
-        # print(arr[i][0])
-        # print(divider[0])
         if (divider[0]-arr[i][0] > distance):
             break
         else:
-            if (len(divider) == 1):
-                points.append(arr[i])
-            for j in range(len(divider)-1):
-                if (divider[j]-arr[i][j] > distance):
-                    break
-                if (j == len(divider) - 2):
-                    points.append(arr[i])
+            points.append(arr[i])
     return points
-
-
-def stripPair(points):
-    return bruteForce(points)
 
 
 def closestPair(arr, n):
     if (n <= 3):
-        return bruteForce(arr)
+        return bruteForce(arr)  # base case
     else:
         middle = n//2
-        distance1, listOfPoints1, numEuc1 = closestPair(
+        distance1, listOfPoints1, numEuc1 = closestPair(  # mencari closest pair pada s1
             arr[:middle], middle)
-        distance2, listOfPoints2, numEuc2 = closestPair(
+        distance2, listOfPoints2, numEuc2 = closestPair(  # mencari closest pair pada s2
             arr[middle:n], n-middle)
         if (distance1 < distance2):
             distance = distance1
             listOfPoints = listOfPoints1
-            # point1 = temp1_point1
-            # point2 = temp1_point2
         elif (distance1 == distance2):
             listOfPoints = listOfPoints1 + listOfPoints2
         else:
             distance = distance2
             listOfPoints = listOfPoints2
-            # point1 = temp2_point1
-            # point2 = temp2_point2
 
         strips = stripPoints(arr, distance, arr[middle], middle)
-        # print('ini strips ', strips)
 
         if (len(strips) >= 2):
-            distanceStrip, listOfPointStrip, numEuc = stripPair(strips)
+            distanceStrip, listOfPointStrip, numEuc = bruteForce(
+                strips)  # mencari closest pair pada s3
             if (distanceStrip < distance):
                 distance = distanceStrip
                 listOfPoints = listOfPointStrip
             elif (distanceStrip == distance):
                 for x in listOfPointStrip:
-                    if (x in listOfPointStrip):
+                    if (x in listOfPoints):
                         continue
                     else:
                         listOfPoints.append(x)

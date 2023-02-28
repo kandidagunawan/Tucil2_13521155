@@ -1,6 +1,6 @@
 import random
+from basic_functions import *
 from divide_and_conquer import *
-from brute_force import *
 from timeit import default_timer as timer
 from visualizer import plotPoints
 
@@ -67,7 +67,7 @@ while (running == True):
     end1 = timer()
 
     start2 = timer()
-    mergeSort(list, 0, n-1)
+    mergeSort(list, 0, n-1, 0)
     d1, listOfPoints2, numEuc2 = closestPair(list, n)
     end2 = timer()
 
@@ -75,8 +75,6 @@ while (running == True):
     print("BRUTE FORCE")
     print("Jarak terdekat antara 2 titik berdasarkan BRUTE FORCE adalah ", distance)
     print("Jarak tersebut merupakan jarak antara 2 titik yaitu:")
-    # print(point1)
-    # print(point2)
     printPasanganTitik(listOfPoints1)
     print("Waktu yang dibutuhkan oleh brute force: ")
     print(end1-start1, ' detik')
