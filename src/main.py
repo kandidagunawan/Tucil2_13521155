@@ -1,6 +1,6 @@
 import random
 from divide_and_conquer import *
-from brute_force import bruteForce
+from brute_force import *
 from timeit import default_timer as timer
 from visualizer import plotPoints
 
@@ -63,20 +63,21 @@ while (running == True):
     #     print('Point', i+1, ":", list[i])
 
     start1 = timer()
-    distance, point1, point2, numEuc1 = bruteForce(list)
+    distance, listOfPoints1, numEuc1 = bruteForce(list)
     end1 = timer()
 
     start2 = timer()
     mergeSort(list, 0, n-1)
-    d1, p1, p2, numEuc2 = closestPair(list, n)
+    d1, listOfPoints2, numEuc2 = closestPair(list, n)
     end2 = timer()
 
     print('\n')
     print("BRUTE FORCE")
     print("Jarak terdekat antara 2 titik berdasarkan BRUTE FORCE adalah ", distance)
     print("Jarak tersebut merupakan jarak antara 2 titik yaitu:")
-    print(point1)
-    print(point2)
+    # print(point1)
+    # print(point2)
+    printPasanganTitik(listOfPoints1)
     print("Waktu yang dibutuhkan oleh brute force: ")
     print(end1-start1, ' detik')
     print('Banyak perhitungan Euclidean Distance:', numEuc1)
@@ -85,14 +86,14 @@ while (running == True):
     print('DIVIDE AND CONQUER')
     print("Jarak terdekat antara 2 titik berdasarkan DIVIDE AND CONQUER adalah ", d1)
     print("Jarak tersebut merupakan jarak antara 2 titik yaitu:")
-    print(p1)
-    print(p2)
+    printPasanganTitik(listOfPoints2)
+
     print("Waktu yang dibutuhkan oleh divide and conquer:")
     print(end2-start2, ' detik')
     print('Banyak perhitungan Euclidean Distance:', numEuc2)
     print('\n')
     if (dimensi == 3):
-        plotPoints(list, p1, p2)
+        plotPoints(list, listOfPoints2)
     validate = False
     while (validate == False):
         stop = input("Apakah kamu ingin keluar dari program? (y/n)")
