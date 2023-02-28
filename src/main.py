@@ -33,8 +33,10 @@ while (running == True):
         dimensi = input("Masukkan dimensi dari titik yang diinginkan: ")
         try:
             dimensi = int(dimensi)
+            if (dimensi <= 0):
+                raise ValueError
         except:
-            print('Only integers are allowed')
+            print('Masukan hanya boleh berupa bilangan bulat positif!')
         else:
             validate = True
     validate = False
@@ -42,8 +44,10 @@ while (running == True):
         n = input("Masukkan jumlah titik yang diinginkan (n): ")
         try:
             n = int(n)
+            if (n < 2):
+                raise ValueError
         except:
-            print('Only integers are allowed')
+            print('Masukan hanya boleh berupa bilangan bulat dengan nilai minimum 2!')
         else:
             validate = True
     list = []
