@@ -77,13 +77,15 @@ def mergeSort(arr, left, right):
 
 def stripPoints(arr, distance, divider, middlePoint):
     points = []
-    # points.append(divider)
-    # print('ini middle', divider)
     for i in range(middlePoint, len(arr)):
-        # print('check1')
+        # print('ini yg up')
+        # print(arr[i][0])
+        # print(divider[0])
         if (arr[i][0] - divider[0] > distance):
             break
         else:
+            if (len(divider) == 1):
+                points.append(arr[i])
             for j in range(len(divider)-1):
                 if (arr[i][j] - divider[j] > distance):
                     # print('test')
@@ -93,17 +95,19 @@ def stripPoints(arr, distance, divider, middlePoint):
                     # print('check*')
 
     for i in range(middlePoint-1, -1, -1):
-        # print('check1')
+        # print('ini yg down')
+        # print(arr[i][0])
+        # print(divider[0])
         if (divider[0]-arr[i][0] > distance):
             break
         else:
+            if (len(divider) == 1):
+                points.append(arr[i])
             for j in range(len(divider)-1):
                 if (divider[j]-arr[i][j] > distance):
-                    # print('test')
                     break
                 if (j == len(divider) - 2):
                     points.append(arr[i])
-                    # print('check')
     return points
 
 
@@ -129,9 +133,9 @@ def closestPair(arr, n):
             point1 = temp2_point1
             point2 = temp2_point2
 
-            # print('ini arr middle', arr[middle])
         strips = stripPoints(arr, distance, arr[middle], middle)
-        # print('ini strips', strips)
+        # print('ini strips ', strips)
+
         if (len(strips) >= 2):
             distanceStrip, point1Strip, point2Strip, numEuc = stripPair(strips)
             if (distanceStrip < distance):
